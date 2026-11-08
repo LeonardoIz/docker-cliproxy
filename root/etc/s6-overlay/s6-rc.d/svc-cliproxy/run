@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+cd /data || exit 1
+
+exec \
+    s6-setuidgid abc cliproxy --config /data/config.yaml

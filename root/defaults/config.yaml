@@ -1,0 +1,11 @@
+server:
+  host: "0.0.0.0"
+  port: 8317
+access:
+  api-keys:
+    - YOUR_API_KEY
+management:
+  secret-key: YOUR_MANAGEMENT_KEY
+  allow-remote: true
+oauth:
+  auth-dir: "/data/auth"

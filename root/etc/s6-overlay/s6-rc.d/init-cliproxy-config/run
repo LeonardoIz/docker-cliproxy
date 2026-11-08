@@ -1,0 +1,17 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+mkdir -p /data/auth
+
+# first run: copy the default config with fresh random keys
+if [[ ! -f /data/config.yaml ]]; then
+    client="sk-$(od -An -tx1 -N24 /dev/urandom | tr -d ' \n')"
+    management="$(od -An -tx1 -N24 /dev/urandom | tr -d ' \n')"
+    printf 'CLIPROXY_CLIENT_KEY=%s\nCLIPROXY_MANAGEMENT_KEY=%s\n' "${client}" "${management}" > /data/keys.env
+    sed -e "s/YOUR_API_KEY/\"${client}\"/" -e "s/YOUR_MANAGEMENT_KEY/\"${management}\"/" \
+        /defaults/config.yaml > /data/config.yaml
+    chmod 600 /data/keys.env /data/config.yaml
+    echo "**** wrote /data/config.yaml, keys are in /data/keys.env ****"
+fi
+
+lsiown -R abc:abc /data

@@ -1,0 +1,13 @@
+services:
+  cliproxy:
+    image: ghcr.io/leonardoiz/cliproxy-rs:latest
+    container_name: cliproxy
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./data:/data
+    ports:
+      - 8317:8317
+    restart: unless-stopped
